@@ -1,0 +1,128 @@
+{
+  "GitHub Copilot 使い方": [
+    {
+      "keyword": "GitHub Copilot 始め方 2026",
+      "description": "2026年最新版のGitHub Copilotセットアップガイド",
+      "priority": "high"
+    },
+    {
+      "keyword": "GitHub Copilot 無料プラン できること",
+      "description": "Copilot Freeプランの機能制限と活用法",
+      "priority": "high"
+    },
+    {
+      "keyword": "GitHub Copilot VS Code 設定",
+      "description": "VS CodeでのCopilot最適設定ガイド",
+      "priority": "medium"
+    }
+  ],
+  "M365 Copilot 使い方": [
+    {
+      "keyword": "Microsoft 365 Copilot 始め方",
+      "description": "M365 Copilotの導入手順と初期設定",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot Cowork とは",
+      "description": "新機能Copilot Coworkの解説と活用法",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot Teams 使い方",
+      "description": "TeamsでのCopilot活用テクニック",
+      "priority": "medium"
+    }
+  ],
+  "Copilot 料金・プラン": [
+    {
+      "keyword": "GitHub Copilot Free Pro Business 比較",
+      "description": "GitHub Copilotの全プランを徹底比較",
+      "priority": "high"
+    },
+    {
+      "keyword": "Microsoft 365 Copilot 料金 2026",
+      "description": "M365 Copilotの最新料金体系",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot 無料で使う方法",
+      "description": "Copilotを無料で使い始める完全ガイド",
+      "priority": "high"
+    }
+  ],
+  "Copilot vs Cursor": [
+    {
+      "keyword": "GitHub Copilot vs Cursor 2026 比較",
+      "description": "2026年最新のCopilot vs Cursor徹底比較",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot vs Windsurf 比較",
+      "description": "CopilotとWindsurfの機能・料金比較",
+      "priority": "medium"
+    },
+    {
+      "keyword": "AIコーディングツール おすすめ 2026",
+      "description": "2026年おすすめAIコーディングツールランキング",
+      "priority": "medium"
+    }
+  ],
+  "Copilot 最新ニュース": [
+    {
+      "keyword": "GitHub Copilot データ学習 デフォルト化",
+      "description": "Copilotのデータ学習ポリシー変更問題",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot Jira 統合",
+      "description": "CopilotとJiraの連携機能解説",
+      "priority": "medium"
+    },
+    {
+      "keyword": "GitHub Copilot Student Plan 制限",
+      "description": "学生プランの制限変更について",
+      "priority": "medium"
+    },
+    {
+      "keyword": "Microsoft 365 E7 Copilot",
+      "description": "M365 E7プランとCopilotの統合",
+      "priority": "medium"
+    }
+  ],
+  "Copilot × Excel": [
+    {
+      "keyword": "Copilot Excel 使い方 関数生成",
+      "description": "ExcelでCopilotを使って関数を自動生成する方法",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot Excel データ分析",
+      "description": "CopilotでExcelデータを分析するテクニック",
+      "priority": "medium"
+    }
+  ],
+  "Copilot × Word・PPT": [
+    {
+      "keyword": "Copilot Word 文書作成 活用法",
+      "description": "WordでCopilotを活用した文書作成テクニック",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot PowerPoint プレゼン 自動生成",
+      "description": "PowerPointでCopilotを使ってプレゼンを自動生成",
+      "priority": "high"
+    }
+  ],
+  "Copilot 活用事例": [
+    {
+      "keyword": "Copilot 活用事例 エンジニア 15選",
+      "description": "エンジニア向けCopilot活用テクニック15選",
+      "priority": "high"
+    },
+    {
+      "keyword": "Copilot ビジネス活用 導入事例",
+      "description": "企業でのCopilot導入成功事例",
+      "priority": "medium"
+    }
+  ]
+}
