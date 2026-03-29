@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 # blog_engineへのパスを追加
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 logging.basicConfig(
     level=logging.INFO,
@@ -82,6 +82,9 @@ def run(config, prompts=None):
                 response_text = response_text.strip()
 
             data = json.loads(response_text)
+        # Geminiがリストで返す場合があるので先頭要素を取得
+        if isinstance(data, list):
+            data = data[0]
             category = data["category"]
             keyword = data["keyword"]
             logger.info("AI選定結果 - カテゴリ: %s, キーワード: %s", category, keyword)
