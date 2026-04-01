@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Copilot活用ラボ</title>
+    <link>https://musclelove-777.github.io/copilot-lab</link>
+    <description>GitHub Copilot・Microsoft 365 Copilotの使い方・最新機能・料金比較を毎日更新。コーディング支援からOffice活用まで、Copilotを完全に使いこなすための日本語ガイド。</description>
+    <language>ja</language>
+    <lastBuildDate>Wed, 01 Apr 2026 23:14:28 +0900</lastBuildDate>
+    <atom:link href="https://musclelove-777.github.io/copilot-lab/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>GitHub Copilot 始め方 2026: 爆速開発への第一歩</title>
+      <link>https://musclelove-777.github.io/copilot-lab/articles/github-copilot-hajimekata-2026-install.html</link>
+      <guid>https://musclelove-777.github.io/copilot-lab/articles/github-copilot-hajimekata-2026-install.html</guid>
+      <description></description>
+      <category>GitHub Copilot 使い方</category>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>コパイロットを無料で使う！全プラン徹底解説【2025年版】</title>
+      <link>https://musclelove-777.github.io/copilot-lab/articles/copilot-free-plan-guide-2025.html</link>
+      <guid>https://musclelove-777.github.io/copilot-lab/articles/copilot-free-plan-guide-2025.html</guid>
+      <description></description>
+      <category>Copilot 料金・プラン</category>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+  </channel>
+</rss>
