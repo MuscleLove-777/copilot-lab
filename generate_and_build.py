@@ -84,9 +84,24 @@ def run(config, prompts=None):
             data = json.loads(response_text)
             # Geminiがリストで返す場合があるので先頭要素を取得
             if isinstance(data, list):
-                data = data[0]
-            category = data["category"]
-            keyword = data["keyword"]
+                data = data[0] if data else {}
+            # 想定外のネスト構造への耐性
+            if isinstance(data, dict) and "category" not in data and "keyword" not in data:
+                for v in data.values():
+                    if isinstance(v, dict) and ("keyword" in v or "category" in v):
+                        data = v
+                        break
+
+            category = data.get("category") or data.get("category_name") or data.get("カテゴリ")
+            keyword = data.get("keyword") or data.get("キーワード") or data.get("query")
+
+            if not keyword:
+                raise ValueError(f"キーワード不明: {data!r}")
+            if not category:
+                import random
+                category = random.choice(config.TARGET_CATEGORIES)
+                logger.warning("categoryが返らず。フォールバックで選定: %s", category)
+
             logger.info("AI選定結果 - カテゴリ: %s, キーワード: %s", category, keyword)
 
         except Exception as e:
