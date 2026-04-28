@@ -1,0 +1,40 @@
+{
+  "title": "GitHub Copilot Workspace 実践ハンズオン2026",
+  "content": "# GitHub Copilot Workspace 実践ハンズオン2026\n\n## この記事でわかること\n- GitHub Copilot Workspace を Issue 起点で動かす実際の流れ\n- プラン → 実装 → テストの3段階で人間が介入すべきポイント\n- 実プロジェクトで使う際のレビュー観点と運用ルール\n\n## 結論\nCopilot Workspace は「Issue を書けば動くPRが出てくる」開発体験を目指したプロダクトで、2026年時点で中級開発者の片腕として実用に耐えるレベルに達しています。最大の価値は手元 IDE を開かずに、ブラウザだけで Issue から PR まで進められること。一方で「丸投げ」は事故るので、プラン段階での人間の介入が成功率を決めます。\n\n## 本題\n### Copilot Workspace の流れ（全体像）\n中級者向けに、典型的なフローを4ステップで整理します。\n\n1. **Issue を書く**: 通常の GitHub Issue、ただしタイトルと本文の質が後工程の精度を決める\n2. **Spec フェーズ**: Workspace が Issue を読み、現状理解と変更方針を提示 → 人間が修正\n3. **Plan フェーズ**: 変更するファイル一覧と各ファイルの編集内容を提示 → 人間が修正\n4. **Implement フェーズ**: 実コードを生成 → ローカルで実行 / テスト → PR 化\n\n人間が口を出すのは Spec と Plan、Implement 後のレビューの3か所です。\n\n### Issue の書き方が9割\nWorkspace は Issue の本文をほぼ唯一の入力として使うので、ここの粒度がすべてを左右します。良い Issue の構造例:\n\n```\n## 概要\nユーザー設定画面でメールアドレスを変更できるようにしたい。\n\n## 背景\n現状は管理者にメールで依頼する運用になっており、月10件ほど発生している。\n\n## 要件\n- /settings/email で新メールアドレスを入力できる\n- 確認メールを新メアドに送り、リンク踏破で確定する\n- 旧メアドにも通知メールを送る\n\n## 受け入れ条件\n- e2e テスト: メアド変更フローが通る\n- 既存ログイン動作に影響しない\n\n## 触ってほしくない場所\n- app/admin/\n```\n\n特に「触ってほしくない場所」は強力なガードになります。\n\n### Spec フェーズで必ず確認すること\nWorkspace が出してくる Spec は要約＋変更方針です。チェックすべきは次の3点。\n\n1. **意図の取り違え**: 自分の意図と1mmでもズレていたら、ここで全力で修正\n2. **既存コードの理解**: 既存の関数名・モデル名を正しく拾えているか\n3. **欠落要件**: 受け入れ条件のうちカバーされていない項目がないか\n\nここで甘くすると、Plan / Implement で全部やり直しになります。\n\n### Plan フェーズの修正パターン\nPlan ではファイル単位の差分計画が出ます。中級者がよく直すのは次のパターン。\n\n- 「新規ファイルにロジックを切り出すべきところを、既存ファイルに詰め込もうとしている」 → ファイル分割を指示\n- 「同じロジックが複数箇所にコピペされている」 → 共通関数化を指示\n- 「テストの追加が抜けている」 → 「最低3ケースの単体テストを追加」と明記\n\nPlan を直すコストは Implement を直すコストの 1/5 程度なので、ここで時間をかけるほうが結果的に速いです。\n\n### Implement / レビュー時の観点\nImplement 後は通常の PR レビューに戻りますが、Workspace 産 PR では特に次を確認します。\n\n1. **環境変数の扱い**: ハードコードされていないか\n2. **ログの粒度**: ログ出しすぎ / 不足はないか\n3. **エラーハンドリング**: 想定外入力で落ちないか\n4. **テストの本物度**: アサーションが「always true」になっていないか\n\n特に4は罠が多く、`expect(true).toBe(true)` 相当のテストが紛れていることがあります。\n\n### チームで運用するときのルール\n1人でなく、チームで Workspace を活用する場合の運用ルール例。\n\n- Issue テンプレを「概要 / 背景 / 要件 / 受け入れ条件 / スコープ外」の5項目で固定\n- Workspace 産 PR は人間PRと区別できるラベル（例: `from:workspace`）を付与\n- マージ前に必ず人間1人がレビュー、自動マージは禁止\n- Workspace の利用ログを Issue にコメントとして残す（再現性確保）\n\n## よくある質問（FAQ）\n### Q1: Cursor の Agent と機能はかぶりますか？\nA1: かぶりますが、UX が違います。Workspace はブラウザで Issue 起点、Cursor の Agent はローカル IDE 起点。普段から GitHub の Issue で仕事を回すチームは Workspace、ローカルで設計しながら書きたい個人は Cursor が合います。\n\n### Q2: モノレポでも使えますか？\nA2: 使えますが、Plan フェーズで「対象パッケージ」を明示しないとファイル横断の影響範囲が読みづらくなります。Issue で `packages/web` のように対象を限定するのがコツです。\n\n### Q3: 料金は個人で回収できますか？\nA3: Issue ベースで定常的にタスクが流れているプロジェクトなら回収可能、たまにしか使わない個人開発だと割高に感じる、というのが実感です。\n\n## まとめ\nCopilot Workspace は「Issue → PR」の自動化を本気で狙ったプロダクトで、中級開発者なら明日から実戦投入できます。鍵は Issue の質と、Spec / Plan フェーズでの人間の介入。Implement に進む前にしっかり修正を入れることで、レビューコストを最小化しながら開発速度を上げられます。\n",
+  "meta_description": "GitHub Copilot Workspace を Issue 起点で動かす実践フローを中級者向けに解説。Spec / Plan / Implement の3段階での人間介入とレビュー観点、チーム運用ルールを紹介。",
+  "tags": [
+    "Copilot Workspace",
+    "GitHub",
+    "Issue駆動",
+    "PR自動化",
+    "AI開発"
+  ],
+  "slug": "copilot-workspace-hands-on-practice-2026",
+  "faq": [
+    {
+      "question": "Q1: Cursor の Agent と機能はかぶりますか？",
+      "answer": "かぶりますが、UX が違います。Workspace はブラウザで Issue 起点、Cursor の Agent はローカル IDE 起点。普段から GitHub の Issue で仕事を回すチームは Workspace、ローカルで設計しながら書きたい個人は Cursor が合います。"
+    },
+    {
+      "question": "Q2: モノレポでも使えますか？",
+      "answer": "使えますが、Plan フェーズで「対象パッケージ」を明示しないとファイル横断の影響範囲が読みづらくなります。Issue で `packages/web` のように対象を限定するのがコツです。"
+    },
+    {
+      "question": "Q3: 料金は個人で回収できますか？",
+      "answer": "Issue ベースで定常的にタスクが流れているプロジェクトなら回収可能、たまにしか使わない個人開発だと割高に感じる、というのが実感です。"
+    }
+  ],
+  "hero_emoji": "📝",
+  "hero_gradient": "135deg",
+  "keyword": "Copilot Workspace",
+  "category": "Copilot Workspace",
+  "generated_at": "2026-04-29T08:11:34.844711",
+  "seo_score": 85,
+  "jsonld": [
+    "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BlogPosting\",\n  \"headline\": \"GitHub Copilot Workspace 実践ハンズオン2026\",\n  \"description\": \"GitHub Copilot Workspace を Issue 起点で動かす実践フローを中級者向けに解説。Spec / Plan / Implement の3段階での人間介入とレビュー観点、チーム運用ルールを紹介。\",\n  \"url\": \"https://musclelove-777.github.io/copilot-lab/articles/copilot-workspace-hands-on-practice-2026.html\",\n  \"datePublished\": \"2026-04-29T08:11:34.844711\",\n  \"dateModified\": \"2026-04-29T08:11:34.844711\",\n  \"author\": {\n    \"@type\": \"Organization\",\n    \"name\": \"wave35d-ai-articles\"\n  },\n  \"keywords\": \"Copilot Workspace, GitHub, Issue駆動, PR自動化, AI開発\",\n  \"articleSection\": \"Copilot Workspace\",\n  \"inLanguage\": \"ja\"\n}\n</script>",
+    "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Q1: Cursor の Agent と機能はかぶりますか？\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"かぶりますが、UX が違います。Workspace はブラウザで Issue 起点、Cursor の Agent はローカル IDE 起点。普段から GitHub の Issue で仕事を回すチームは Workspace、ローカルで設計しながら書きたい個人は Cursor が合います。\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Q2: モノレポでも使えますか？\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"使えますが、Plan フェーズで「対象パッケージ」を明示しないとファイル横断の影響範囲が読みづらくなります。Issue で `packages/web` のように対象を限定するのがコツです。\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Q3: 料金は個人で回収できますか？\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Issue ベースで定常的にタスクが流れているプロジェクトなら回収可能、たまにしか使わない個人開発だと割高に感じる、というのが実感です。\"\n      }\n    }\n  ]\n}\n</script>",
+    "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 1,\n      \"name\": \"ホーム\",\n      \"item\": \"https://musclelove-777.github.io/copilot-lab\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 2,\n      \"name\": \"Copilot Workspace\",\n      \"item\": \"https://musclelove-777.github.io/copilot-lab/category/Copilot Workspace\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 3,\n      \"name\": \"GitHub Copilot Workspace 実践ハンズオン2026\"\n    }\n  ]\n}\n</script>"
+  ],
+  "has_affiliate": false,
+  "affiliate_count": 0
+}
