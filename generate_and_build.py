@@ -48,13 +48,8 @@ def run(config, prompts=None):
     # topics.jsonに該当がなければAIで選定
     if not category or not keyword:
         try:
-            from google import genai
-
-            if not config.GEMINI_API_KEY:
-                logger.error("GEMINI_API_KEY が設定されていません")
-                sys.exit(1)
-
-            client = genai.Client(api_key=config.GEMINI_API_KEY)
+            from llm import get_llm_client
+            client = get_llm_client(config)
 
             if prompts and hasattr(prompts, "build_keyword_prompt"):
                 prompt = prompts.build_keyword_prompt(config)
